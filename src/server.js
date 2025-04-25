@@ -4,7 +4,7 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import pino from 'pino';
 import pinoHttp from 'pino-http';
 import { errorHandler } from './middleware/errorHandler.js';
-import contactsRouter from './routers/contacts.js';
+import contactsRouter from './routers/contactRout.js';
 
 const logger = pino({
   transport: {
