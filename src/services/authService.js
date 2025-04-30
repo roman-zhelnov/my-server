@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import crypto from 'node:crypto';
 import createHttpError from 'http-errors';
 import { User } from '../models/user.js';
 
