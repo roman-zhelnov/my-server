@@ -1,12 +1,13 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import pino from 'pino';
 import pinoHttp from 'pino-http';
 import { errorHandler } from './middleware/errorHandler.js';
 import router from './routers/index.js';
 
-const logger = pino({
+export const logger = pino({
   transport: {
     target: 'pino-pretty',
   },
@@ -16,6 +17,7 @@ const app = express();
 
 app.use(pinoHttp({ logger }));
 app.use(cors());
+app.use(cookieParser());
 
 app.use(router);
 
