@@ -6,7 +6,6 @@ import {
   getContactById,
   updateContact,
 } from '../services/contactService.js';
-import { logger } from '../server.js';
 
 export const getContactsController = async (req, res) => {
   const contacts = await getAllContacts({ ownerId: req.user.id });
