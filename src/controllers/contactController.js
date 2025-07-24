@@ -6,9 +6,10 @@ import {
   getContactById,
   updateContact,
 } from '../services/contactService.js';
+import { logger } from '../server.js';
 
 export const getContactsController = async (req, res) => {
-  const contacts = await getAllContacts();
+  const contacts = await getAllContacts({ ownerId: req.user.id });
   res.send({
     status: 200,
     message: 'Successfully found contacts!',
@@ -22,6 +23,11 @@ export const getContactByIdController = async (req, res) => {
   if (contact === null) {
     throw new createHttpError[404]('Contact not found!');
   }
+
+  if (contact.ownerId.toString() !== req.user.id.toString()) {
+    throw new createHttpError[404]('Contact not found!');
+  }
+
   res.send({
     status: 200,
     message: `Successfully found contact with id ${id}!`,
@@ -35,6 +41,7 @@ export const createContactController = async (req, res) => {
     phoneNumbers: req.body.phoneNumbers,
     email: req.body.email,
     isFavourite: req.body.isFavourite,
+    ownerId: req.user.id,
   };
   const result = await createContact(contact);
   res.status(201).send({
