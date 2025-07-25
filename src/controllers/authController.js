@@ -1,8 +1,10 @@
+import { logger } from '../server.js';
 import {
   registerUser,
   loginUser,
   logoutUser,
   refreshSession,
+  reqResetPassword,
 } from '../services/authService.js';
 
 export const registerController = async (req, res) => {
@@ -75,4 +77,11 @@ export const refreshController = async (req, res) => {
     message: 'Session refreshed',
     date: { accessToken: session.accessToken },
   });
+};
+
+export const resetPasswordController = async (req, res) => {
+  const { email } = req.body;
+
+  await reqResetPassword(email);
+  res.send({ status: 200 });
 };
